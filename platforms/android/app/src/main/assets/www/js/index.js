@@ -98,5 +98,59 @@ function onDeviceReady() {
         console.log("Error requesting permission: " + error);
     }
 
+document.addEventListener('DOMContentLoaded', function() {
+    var logo = document.getElementById('main-logo');
+    var logoContainer = document.getElementById('logo-container');
+    var welcomeModal = document.getElementById('welcome-modal');
+    var loginBtn = document.getElementById('login-btn');
+    var registerBtn = document.getElementById('register-btn');
+    var closeBtn = document.getElementById('close-welcome');
+    var clickHint = document.getElementById('click-hint');
+
+    if (logo) {
+        logo.addEventListener('click', function() {
+            logoContainer.classList.add('moved');
+            if (clickHint) clickHint.style.display = 'none';
+            setTimeout(function() {
+                welcomeModal.classList.remove('hidden');
+                setTimeout(function() {
+                    welcomeModal.classList.add('show');
+                }, 10);
+            }, 600);
+        });
+    }
+    if (loginBtn) {
+        loginBtn.addEventListener('click', function() {
+            window.location.href = 'login.html';
+        });
+    }
+    if (registerBtn) {
+        registerBtn.addEventListener('click', function() {
+            window.location.href = 'register.html';
+        });
+    }
+
+    function resetToInitialState() {
+        logoContainer.classList.remove('moved');
+        welcomeModal.classList.remove('show');
+        setTimeout(function() {
+            welcomeModal.classList.add('hidden');
+            if (clickHint) clickHint.style.display = '';
+        }, 500);
+    }
+    if (closeBtn) {
+        closeBtn.addEventListener('click', resetToInitialState);
+    }
+
+    // Cerrar modal al hacer click fuera del div de bienvenida
+    if (welcomeModal) {
+        welcomeModal.addEventListener('click', function(e) {
+            if (e.target === welcomeModal) {
+                resetToInitialState();
+            }
+        });
+    }
+});
+
 
 
