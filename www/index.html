@@ -20,7 +20,7 @@
             <div id="click-hint">CLICKEAME! :D</div>
         </div>
         <div id="welcome-modal" class="hidden">
-            <div class="welcome-content">
+            <div id="deviceready" class="welcome-content">
                 <h2>¡Bienvenido a tu portal de reclamos y avisos de Justicia Social!</h2>
                 <p>Tienes una cuenta?Deseas crearla? elige:</p>
                 <button id="login-btn">Iniciar sesión</button>
@@ -30,13 +30,30 @@
         </div>
         <script src="cordova.js"></script>
         <script src="js/index.js"></script>
-        <script type="text/javascript" src="js/api.js"></script>
+        <script src="js/api.js"></script>
+        <script src="js/behaviour.js"></script>
     </body>
 </html>  
 
 <script>
-async function carga_usuarios(id){
-    res = await get_users(id);
-    console.log("RES: " + JSON.stringify(res))
+
+var uuid = "";
+var fabrica = "";
+var modelo = "";
+var platform = "";
+
+async function valida_usuario(){
+    try{
+        alert(uuid);
+        if(uuid == ""){uuid = "25"}
+        res = await get_users(uuid);
+        alert("RES: " + JSON.stringify(res))
+        if (res.length == 0){
+            abre_pag("error_uuid.html");
+        }
+    }catch(e){
+        alert("ERROR: " + e)
+    }
 }
+
 </script>

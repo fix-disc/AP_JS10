@@ -1,101 +1,88 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
 
-// Wait for the deviceready event before using any of Cordova's device APIs.
-// See https://cordova.apache.org/docs/en/latest/cordova/events/events.html#deviceready
 document.addEventListener('deviceready', onDeviceReady, false);
 
 function onDeviceReady() {
     // Cordova is now initialized. Have fun!
-    var permissions = cordova.plugins.permissions;
-
-    permissions.checkPermission(permissions.READ_PHONE_STATE, function(status) {
-    if (!status.hasPermission) {
-        permissions.requestPermission(permissions.READ_PHONE_STATE, success, error);
-    } else {
-        // Permission already granted, proceed to read phone information
-        // Example: Get phone number using cordova-plugin-device
-        if (window.cordova && window.cordova.plugins && window.cordova.plugins.device.getLine1Number) {
-        window.cordova.plugins.device.getLine1Number(function(result) {
-            console.log("Phone number: " + result);
-        }, function(error) {
-            console.log("Error getting phone number: " + error);
-        });
-        }
-    }
-    }, error);
-
-
-
+    
     console.log('Running cordova-' + cordova.platformId + '@' + cordova.version);
     document.getElementById('deviceready').classList.add('ready');
+    console.log("UUID: " + uuid)
 
     //window.plugins.phonenumber.get(success, failed);
     //console.log("My number is " + phonenumber);
-    //window.plugins.sim.requestReadPermission(successCallback, errorCallback);
-    //window.plugins.sim.getSimInfo(get_info, error_info);
 
-    if (window.cordova && window.cordova.plugins && window.cordova.plugins.device) {
-        var device = window.cordova.plugins.device;
-        console.log("Device UUID: " + device.uuid);
-        alert("Device UUID: " + device.uuid);
-        console.log("Device Model: " + device.model);
-        console.log("Device Platform: " + device.platform);
-
-        // Get phone number (Android only, and may be unavailable)
-        if (device.getLine1Number) {
-        device.getLine1Number(function(result) {
-            console.log("Phone number: " + result);
-        }, function(error) {
-            console.log("Error getting phone number: " + error);
-        });
+    var permissions = window.cordova.plugins.permissions;
+    permissions.checkPermission(permissions.READ_PHONE_STATE, function(status) {
+        if (!status.hasPermission) {
+            permissions.requestPermission(permissions.READ_PHONE_STATE, success, error);
+        } else {
+            // Permission already granted, proceed to read phone information
+            // Example: Get phone number using cordova-plugin-device
+            //alert("MODELO " + device.model)
+            //alert("UUID: " + device.uuid);
+            
+            
+            
         }
-    }
-
-
+    }, error);
 
 }
 
     function successCallback(result) {
-        alert(result);
+         if (window.plugins && window.plugins.sim) {
+                window.plugins.sim.getSimInfo(
+                    function(result) {
+                        console.log('SIM info: ' + JSON.stringify(result));
+                        alert('SIM info: ' + JSON.stringify(result));
+                        if (result.phoneNumber) {
+                            alert('Phone number: ' + result.phoneNumber);
+                        } else {
+                            alert('Phone number not available.');
+                        }
+                    },
+                    function(error) {
+                        console.log('Error getting SIM info: ' + error);
+                        alert('Error getting phone number: ' + error);
+                    }
+                );
+            } else {
+                alert('cordova-plugin-sim is not available.');
+            }
+        alert(JSON.stringify(result));
     }
 
     function errorCallback(error) {
-        alert(error);
+        alert(JSON.stringify(error));
     }
 
 
     function get_info(result) {
-        alert(result);
+        alert(JSON.stringify(result));
     }
 
     function error_info(error) {
-        alert(error);
+        alert(JSON.stringify(error));
     }
 
     function success() {
-        console.log("Permission granted");
-        // Proceed to read phone information
+        alert("Permission granted");
+        alert("MODELO " + device.model);
+        alert("Phone UUID: " + device.uuid);
+        alert("Phone Num: " + device.getLine1Number);
+        try{
+           var plataforma = device.platform;
+            if(plataforma != "browser"){
+                fabrica = device.manufacturer;
+                modelo = device.model;
+                uuid = device.uuid;
+            }
+        }catch(e){
+            alert("ERROR: "+e)
+        }
     }
 
     function error(error) {
-        console.log("Error requesting permission: " + error);
+        alert("Error requesting permission: " + error);
     }
 
 document.addEventListener('DOMContentLoaded', function() {

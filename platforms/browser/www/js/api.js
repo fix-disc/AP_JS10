@@ -1,13 +1,13 @@
 // PROD
-base_url = "http://localhost/API-RECLAMOS/api.php"
+base_url = "https://gestor-it.com/libroquejas/api.php"
 // DEV
-base_url = "http://localhost/API-RECLAMOS/api.php"
+//base_url = "http://localhost/API-RECLAMOS/api.php"
 
 
 async function get_users(id){
     url = base_url
-    if(id != undefined){
-        url = base_url + "?id=" + id;
+    if(uuid != undefined){
+        url = base_url + "?uuid=" + id;
     }
     alert("url: " + url)
     let response = await fetch(url);
