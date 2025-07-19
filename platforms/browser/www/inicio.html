@@ -10,7 +10,7 @@
         <title>Hello World</title>
     </head>
     <body>
-        <div class="body_vid"></div>
+        <div class="body_flat"></div>
         <div id="logo-container">
             <img id="main-logo" src="img/LogoRecortadoa.png" width="200px" alt="Logo">
             <div id="click-hint">CLICKEAME! :D</div>
@@ -30,26 +30,3 @@
         <script src="js/behaviour.js"></script>
     </body>
 </html>  
-
-<script>
-
-var uuid = "";
-var fabrica = "";
-var modelo = "";
-var platform = "";
-
-async function valida_usuario(){
-    try{
-        alert(uuid);
-        if(uuid == ""){uuid = "25"}
-        res = await get_users(uuid);
-        alert("RES: " + JSON.stringify(res))
-        if (res.length == 0){
-            abre_pag("error_uuid.html");
-        }
-    }catch(e){
-        alert("ERROR: " + e)
-    }
-}
-
-</script>

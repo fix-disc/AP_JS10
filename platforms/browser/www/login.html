@@ -15,11 +15,26 @@
     </a>
     <div class="login-container" style="z-index: 10;">
         <h2>Iniciar sesión</h2>
-        <input type="email" placeholder="Correo electrónico" autocomplete="username" required>
-        <input type="password" placeholder="Contraseña" autocomplete="current-password" required>
+        <input id="email" type="text" placeholder="Correo electrónico" autocomplete="username" required>
+        <input id="password" type="text" placeholder="Contraseña" autocomplete="current-password" required>
         <a href="recuperar.html" class="forgot-link">¿SE TE OLVIDO TU CONTRASEÑA?</a>
-        <button class="login-btn">INGRESAR</button>
+        <button class="ingresa-btn" onclick="login_user()">INGRESAR</button>
     </div>
     
 </body>
-</html> 
+</html>
+
+<script src="js/api.js"></script>
+<script>
+
+    async function login_user(){
+        usuario = document.getElementById("email").value;
+        password = document.getElementById("password").value;
+        res = await login_usuario(usuario, password);
+        if(res.length > 0){
+            window.location.href = 'inicio.html';
+        }
+        alert("RES: " + JSON.stringify(res))
+    }
+
+</script>

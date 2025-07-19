@@ -93,6 +93,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var registerBtn = document.getElementById('register-btn');
     var closeBtn = document.getElementById('close-welcome');
     var clickHint = document.getElementById('click-hint');
+    var ingresaBtn = document.getElementById('ingresa-btn');
 
     if (logo) {
         logo.addEventListener('click', function() {
@@ -114,6 +115,11 @@ document.addEventListener('DOMContentLoaded', function() {
     if (registerBtn) {
         registerBtn.addEventListener('click', function() {
             window.location.href = 'register.html';
+        });
+    }
+    if (ingresaBtn) {
+        ingresaBtn.addEventListener('click', function() {
+            window.location.href = 'inicio.html';
         });
     }
 
