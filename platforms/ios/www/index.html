@@ -1,72 +1,55 @@
 <!DOCTYPE html>
-<!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
-    <script>
-
-</script>
 <html>
     <head>
         <meta charset="utf-8">
-        <!--
-        Customize this policy to fit your own app's needs. For more guidance, please refer to the docs:
-            https://cordova.apache.org/docs/en/latest/
-        Some notes:
-            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
-            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
-                * Enable inline JS: add 'unsafe-inline' to default-src
-        -->
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
         <meta name="color-scheme" content="light dark">
         <link rel="stylesheet" href="css/index.css">
-        <title>Hello World</title>
+        <title>Portada</title>
     </head>
-    <body onclick="carga_usuarios()">
-        
-        <div class="body_vid">
-            <!--
-            <video autoplay muted loocordova p id="myVideo">
-                <source src="img/planorecoleta.mp4" type="video/mp4">
-            </video>
-            -->
-            
+    <body>
+        <div class="body_vid"></div>
+        <div id="logo-container">
+            <img id="main-logo" src="img/LogoRecortadoa.png" width="200px" alt="Logo">
+            <div id="click-hint">CLICKEAME! :D</div>
         </div>
-        <div class="app" style="transform: translate(-100px);">
-                <h1 style="color:white">Justicia Social</h1>
-                <img src="img/LogoRecortadoa.png" width="200px"><br><br>
-                <div id="deviceready" class="blink">
-                    <p class="event listening">Connecting to Device</p>
-                    <p class="event received">INGRESAR</p>
-                </div>
-
-        
+        <div id="welcome-modal" class="hidden">
+            <div id="deviceready" class="welcome-content">
+                <h2>¡Bienvenido a tu portal de reclamos y avisos de Justicia Social!</h2>
+                <p>Tienes una cuenta?Deseas crearla? elige:</p>
+                <button id="login-btn">Iniciar sesión</button>
+                <button id="register-btn">Registrarse</button>
+            </div>
+            <button id="close-welcome" class="close-btn" aria-label="Cerrar">&times;</button>
         </div>
         <script src="cordova.js"></script>
         <script src="js/index.js"></script>
-        <script type="text/javascript" src="js/api.js"></script>
+        <script src="js/api.js"></script>
+        <script src="js/behaviour.js"></script>
     </body>
 </html>  
 
 <script>
-async function carga_usuarios(id){
-    res = await get_users(id);
-    console.log("RES: " + JSON.stringify(res))
+
+var uuid = "";
+var fabrica = "";
+var modelo = "";
+var platform = "";
+
+async function valida_usuario(){
+    try{
+        alert(uuid);
+        if(uuid == ""){uuid = "25"}
+        res = await get_users(uuid);
+        alert("RES: " + JSON.stringify(res))
+        if (res.length == 0){
+            abre_pag("error_uuid.html");
+        }
+    }catch(e){
+        alert("ERROR: " + e)
+    }
 }
+
 </script>

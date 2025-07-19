@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en_US</string>
 	<key>CFBundleDisplayName</key>
-	<string>HelloCordova</string>
+	<string>APP_JS</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -65,5 +65,9 @@
 			</dict>
 		</dict>
 	</array>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Request to use Microphone</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Request to use Speech Recognition</string>
 </dict>
 </plist>
