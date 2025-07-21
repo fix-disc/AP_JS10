@@ -25,6 +25,7 @@
 </html>
 
 <script src="js/api.js"></script>
+<script src="js/behaviour.js"></script>
 <script>
 
     async function login_user(){
@@ -32,7 +33,7 @@
         password = document.getElementById("password").value;
         res = await login_usuario(usuario, password);
         if(res.length > 0){
-            window.location.href = 'reclamo.html';
+            abre_pag('reclamo.html');
         }
         alert("RES: " + JSON.stringify(res))
     }

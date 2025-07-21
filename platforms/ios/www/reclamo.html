@@ -16,8 +16,8 @@
             <h2>📢 RECLAMO 📢</h2>
             <textarea id="reclamo" type="text" placeholder="Reclamo" autocomplete="reclamo" rows="10" cols="40" required></textarea>
             <div onclick="start_speech()" style="width: 100%; text-align: right; cursor: pointer;"><br><img src="img/microphone.png" width="35"></div>
-            <button class="reclamo-btn" onclick="login_user()">ENVIAR</button>
-            <button class="reclamo-btn-can" onclick="login_user()">CANCELAR</button>
+            <button class="reclamo-btn" onclick="envia_reclamo()">ENVIAR</button>
+            <button class="reclamo-btn-can" onclick="cancelar()">CANCELAR</button>
         </div>
         <script src="cordova.js"></script>
     </body>
@@ -58,6 +58,31 @@ function start_speech(){
         recognition.start();
         listening = true;
 
+    }
+}
+
+async function envia_reclamo(){
+    try{
+        reclamo = document.getElementById('reclamo').value;
+        if(reclamo == ""){
+            alert("Debe ingresar reclamo");
+            document.getElementById('reclamo').focus();
+            return;
+        }
+        res = await post_reclamo(reclamo);
+        if (res.length == 0){
+            abre_pag("error_uuid.html");
+        }
+    }catch(e){
+        alert("ERROR: " + e)
+    }
+}
+
+function cancelar(){
+    try{
+        abre_pag("index.html");
+    }catch(e){
+        alert("ERROR: " + e)
     }
 }
 

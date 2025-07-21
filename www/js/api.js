@@ -9,15 +9,23 @@ async function get_users(id){
     if(uuid != undefined){
         url = base_url + "api.php?uuid=" + id;
     }
-    alert("url: " + url)
     let response = await fetch(url);
     let data = await response.json();
     return data; 
 }
 
+async function post_reclamo(reclamo){
+    url = base_url
+    url = base_url + "reclamos.php?reclamo=" + reclamo;
+    alert("URL: " + url);
+    let response = await fetch(url,{method: "POST"});
+    let data = await response.json();
+    alert(JSON.stringify(data));
+    return data; 
+}
+
 async function login_usuario(usuario, password){
     url = base_url + "usuarios.php?usuario=" + usuario + "&password=" + password;
-    alert("url: " + url)
     let response = await fetch(url);
     let data = await response.json();
     return data; 
