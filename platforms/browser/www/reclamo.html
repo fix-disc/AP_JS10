@@ -15,11 +15,16 @@
         <div class="reclamo-container" style="z-index: 1;">
             <h2>📢 RECLAMO 📢</h2>
             <textarea id="reclamo" type="text" placeholder="Reclamo" autocomplete="reclamo" rows="10" cols="40" required></textarea>
-            <div onclick="start_speech()" style="width: 100%; text-align: right; cursor: pointer;"><br><img src="img/microphone.png" width="35"></div>
-            <button class="reclamo-btn" onclick="login_user()">ENVIAR</button>
-            <button class="reclamo-btn-can" onclick="login_user()">CANCELAR</button>
+            <input type="text" id="reclamo2" style="color: #a5a4a4">
+            <div onclick="start_speech()" style="width: 100%; text-align: right; cursor: pointer;">
+                <img src="img/microphone.png" width="45">
+            </div>
+            <button class="reclamo-btn" onclick="envia_reclamo()">ENVIAR</button>
+            <button class="reclamo-btn-can" onclick="cancelar()">CANCELAR</button>
         </div>
         <script src="cordova.js"></script>
+        <script src="js/api.js"></script>
+        <script src="js/behaviour.js"></script>
     </body>
 </html>
 
@@ -29,14 +34,13 @@ SpeechRecognition = window.speechRecognition || window.webkitSpeechRecognition;
     const recognition = new SpeechRecognition();
     recognition.interimResults = true;
     recognition.continuos = true;
-    listening = false;
     
     recognition.onresult = (event) => {
-        transcript = "";
+        var transcript = "";
         for (i= event.resultIndex; i < event.results.length; i++){
             transcript += event.results[i][0].transcript;
         }
-        document.getElementById("reclamo").value = transcript;
+        document.getElementById("reclamo2").value = transcript;
     }
 
     recognition.onerror = (event) => {
@@ -44,20 +48,44 @@ SpeechRecognition = window.speechRecognition || window.webkitSpeechRecognition;
     }
 
     recognition.onend = (event) => {
-        listening = false;
-        
+        var reclamo =  document.getElementById("reclamo");
+        var reclamo2 =  document.getElementById("reclamo2");
+        if (reclamo.value != ""){
+            reclamo.value = reclamo.value + ".\n" + reclamo2.value
+        }else{
+            reclamo.value = reclamo2.value
+        }
+        reclamo2.value = "";
+        recognition.start();
     } 
 
 
 function start_speech(){
-    if(listening){
-        recognition.stop();
-        listening = false;
+    recognition.start();
+}
 
-    }else{
-        recognition.start();
-        listening = true;
+async function envia_reclamo(){
+    try{
+        reclamo = document.getElementById('reclamo').value;
+        if(reclamo == ""){
+            alert("Debe ingresar reclamo");
+            document.getElementById('reclamo').focus();
+            return;
+        }
+        res = await post_reclamo(reclamo);
+        if (res.length == 0){
+            abre_pag("error_uuid.html");
+        }
+    }catch(e){
+        alert("ERROR: " + e)
+    }
+}
 
+function cancelar(){
+    try{
+        abre_pag("index.html");
+    }catch(e){
+        alert("ERROR: " + e)
     }
 }
 
