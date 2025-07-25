@@ -16,11 +16,18 @@ async function get_users(id){
 
 async function post_reclamo(reclamo){
     url = base_url
-    url = base_url + "reclamos.php?reclamo=" + reclamo;
-    alert("URL: " + url);
-    let response = await fetch(url,{method: "POST"});
+    url = base_url + "reclamos.php";
+
+    var data1 = {reclamo: reclamo }
+    options = {
+        method: 'POST', // Specify the HTTP method as POST
+        headers: {
+        'Content-Type': 'application/json' // Indicate that the body is JSON
+        },
+        body: JSON.stringify(data1) // Convert the JavaScript object to a JSON string
+    };
+    let response = await fetch(url, options);
     let data = await response.json();
-    alert(JSON.stringify(data));
     return data; 
 }
 
